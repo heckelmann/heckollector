@@ -32,10 +32,16 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}      
-      - name: Setup syft scanner
-        id: syft
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+      - uses: actions/cache@69d9d449aced6a2ede0bc19182fadc3a0a42d2b0 # v3.2.6
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      # - uses: sigstore/cosign-installer@c3667d99424e7e6047999fb6246c0da843953c65 # v3.0.1
+      - uses: anchore/sbom-action/download-syft@07978da4bdb4faa726e52dfc6b1bed63d4b56479 # v0.13.3
       - name: Generate code using OpenTelemetry Collector Builder
         id: generate
         run: |
