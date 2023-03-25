@@ -15,6 +15,47 @@ builds:
       - windows
       - darwin
 
+sboms:
+  - artifacts: archive
+  - id: source
+    artifacts: source
+
+dockers:
+  - image_templates: [ "ghcr.io/heckelmann/{{ .ProjectName }}:{{ .Version }}-amd64" ]
+    dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - --platform=linux/amd64
+      - --label=org.opencontainers.image.licenses=Apache-2.0
+      - --label=org.opencontainers.image.description=OpenTelemetry Collector distribution for Heckelmann
+      - --label=org.opencontainers.image.created={{.Date}}
+      - --label=org.opencontainers.image.name={{.ProjectName}}
+      - --label=org.opencontainers.image.revision={{.FullCommit}}
+      - --label=org.opencontainers.image.version={{.Version}}
+      - --label=org.opencontainers.image.source={{.GitURL}}
+  - image_templates: [ "ghcr.io/heckelmann/{{ .ProjectName }}:{{ .Version }}-arm64" ]
+    goarch: arm64
+    dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - --platform=linux/arm64/v8
+      - --label=org.opencontainers.image.licenses=Apache-2.0
+      - --label=org.opencontainers.image.description=OpenTelemetry Collector distribution for Heckelmann
+      - --label=org.opencontainers.image.created={{.Date}}
+      - --label=org.opencontainers.image.name={{.ProjectName}}
+      - --label=org.opencontainers.image.revision={{.FullCommit}}
+      - --label=org.opencontainers.image.version={{.Version}}
+      - --label=org.opencontainers.image.source={{.GitURL}}
+
+docker_manifests:
+  - name_template: 'ghcr.io/heckelmann/{{ .ProjectName }}:{{ .Version }}'
+    image_templates:
+      - 'ghcr.io/heckelmann/{{ .ProjectName }}:{{ .Version }}-amd64'
+      - 'ghcr.io/heckelmann/{{ .ProjectName }}:{{ .Version }}-arm64'
+  - name_template: 'ghcr.io/heckelmann/{{ .ProjectName }}:latest'
+    image_templates:
+      - 'ghcr.io/heckelmann/{{ .ProjectName }}:{{ .Version }}-amd64'
+      - 'ghcr.io/heckelmann/{{ .ProjectName }}:{{ .Version }}-arm64'
 
 archives:
   - format: tar.gz
