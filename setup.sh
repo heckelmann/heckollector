@@ -1,0 +1,1 @@
+GO111MODULE=on go install go.opentelemetry.io/collector/cmd/builder@latest
