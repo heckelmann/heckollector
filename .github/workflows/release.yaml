@@ -27,8 +27,8 @@ jobs:
       - name: Generate code using OpenTelemetry Collector Builder
         id: generate
         run: |
-          go install github.com/open-telemetry/opentelemetry-collector-builder/cmd/otelcol-builder@latest
-          otelcol-builder --config otelcol-builder.yaml --skip-compilation
+          GO111MODULE=on go install go.opentelemetry.io/collector/cmd/builder@latest
+          make generate
       # More assembly might be required: Docker logins, GPG, etc. It all depends
       # on your needs.
       #- uses: goreleaser/goreleaser-action@v4
