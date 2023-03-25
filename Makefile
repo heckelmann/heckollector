@@ -14,4 +14,4 @@ generate:
 .PHONY: clean
 clean:
 	@echo "Cleaning up"
-	rm -rf dist/*
+	rm -rf heckolector/*

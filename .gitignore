@@ -1,2 +1,7 @@
-dist/
-dist/
+main.go
+main_others.go
+main_windows.go
+go.mod
+go.sum
+components.go
+components_test.go

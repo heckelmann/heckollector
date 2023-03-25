@@ -1,7 +1,7 @@
 dist:
   name: heckollector
   description: Local OpenTelemetry Collector binary
-  output_path: ./dist
+  output_path: ./
 exporters:
   - gomod: go.opentelemetry.io/collector/exporter/loggingexporter v0.73.0
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/dynatraceexporter 04a89549d23671876fd58156bda045ab93f7d430
